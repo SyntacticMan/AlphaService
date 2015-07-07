@@ -41,6 +41,37 @@ namespace AlphaService
             return xMainElem;
         }
 
+        public XElement GetRecruitById(string recruitId)
+        {
+            // criar um recruta que vai ser recuperado
+            Recruits recruit = new Recruits();
+
+            // convert id para int32
+            int int_RecruitId = Convert.ToInt32(recruitId);
+
+            // validar o ID e recuperar o recruta da base de dados
+            if (!string.IsNullOrEmpty(recruitId))
+            {
+                recruit = db.Recruits.Where(x => x.Id.Equals(int_RecruitId)).FirstOrDefault();
+            }
+            else
+            {
+                return new XElement("");
+            }
+
+            // criar o elemento xml para devolver o recruta
+
+            XElement xElem = new XElement("recruit",
+                new XElement("id", recruit.Id),
+                new XElement("name", recruit.Name),
+                new XElement("email", recruit.Email),
+                new XElement("platoonid", recruit.PlatoonId)
+                );
+
+            return xElem;
+        }
+
+
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()
         {
