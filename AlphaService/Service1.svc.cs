@@ -71,6 +71,10 @@ namespace AlphaService
             return xElem;
         }
 
+        /// <summary>
+        ///  transforma a lista completa do staff num xml
+        /// </summary>
+        /// <returns></returns>
         public XElement GetAllStaff()
         {
             List<Staff> staffList = db.Staff.ToList();
@@ -92,6 +96,11 @@ namespace AlphaService
             return xMainElem;
         }
 
+        /// <summary>
+        ///  recupera o elemento do staff por id e devolve um xml
+        /// </summary>
+        /// <param name="staffId"></param>
+        /// <returns></returns>
         public XElement GetStaffById(string staffId)
         {
             Staff staff = new Staff();
