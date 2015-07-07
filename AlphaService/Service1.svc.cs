@@ -92,6 +92,31 @@ namespace AlphaService
             return xMainElem;
         }
 
+        public XElement GetStaffById(string staffId)
+        {
+            Staff staff = new Staff();
+
+            int int_StaffId = Convert.ToInt32(staffId);
+
+            if (!string.IsNullOrEmpty(staffId))
+            {
+                staff = db.Staff.Where(x => x.Id.Equals(int_StaffId)).FirstOrDefault();
+            }
+            else
+            {
+                return new XElement("");
+            }
+
+            XElement xElem = new XElement("staff",
+                new XElement("id", staff.Id),
+                new XElement("name", staff.Name),
+                new XElement("email", staff.Email),
+                new XElement("platoonid", staff.PlatoonId)
+                );
+
+            return xElem;
+        }
+
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()
         {
