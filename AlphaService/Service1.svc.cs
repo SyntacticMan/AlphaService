@@ -71,6 +71,26 @@ namespace AlphaService
             return xElem;
         }
 
+        public XElement GetAllStaff()
+        {
+            List<Staff> staffList = db.Staff.ToList();
+
+            XElement xMainElem = new XElement("staffs");
+
+            foreach (Staff item in staffList)
+            {
+                XElement xElem = new XElement("staff",
+                    new XElement("id", item.Id),
+                    new XElement("name", item.Name),
+                    new XElement("email", item.Email),
+                    new XElement("platoonid", item.PlatoonId)
+                    );
+
+                xMainElem.Add(xElem);
+            }
+            
+            return xMainElem;
+        }
 
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()

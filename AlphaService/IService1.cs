@@ -40,6 +40,10 @@ namespace AlphaService
         [OperationContract]
         [WebGet(UriTemplate = "getrecruitbyid/{recruitId}")]
         XElement GetRecruitById(string recruitId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "getallstaff")]
+        XElement GetAllStaff();
     }
 
 }
