@@ -97,6 +97,39 @@ namespace AlphaService
         }
 
         /// <summary>
+        /// método para actualizar o recruta
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="platoonId"></param>
+        /// <returns></returns>
+        public XElement UpdateRecruit(string id, string name, string email, string platoonId)
+        {
+            XElement xElem = new XElement("isUpdated");
+
+            // validar os parâmetros e actualizar o registo
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(platoonId))
+            {
+                int recruitId = Convert.ToInt32(id);
+
+                Recruits recruit = db.Recruits.Where(x => x.Id.Equals(recruitId)).FirstOrDefault();
+
+                recruit.Name = name;
+                recruit.Email = email;
+                recruit.PlatoonId = Convert.ToInt32(platoonId);
+
+                db.Entry(recruit).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                xElem.Value = "true";
+                return xElem;
+            }
+
+            xElem.Value = "false";
+            return xElem;
+        }
+
+        /// <summary>
         ///  transforma a lista completa do staff num xml
         /// </summary>
         /// <returns></returns>
@@ -330,7 +363,7 @@ namespace AlphaService
         public XElement UpdatePlatoons(string id, string name, string initialdate, string finaldate)
         {
             // elemento xml para confirmar sucesso da operação
-            XElement xElem = new XElement("isUpdate");
+            XElement xElem = new XElement("isUpdated");
 
             // validar os parâmetros, recuperar o pelotão e enviar os novos parãmetros para a base de dados
             if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(initialdate) && !string.IsNullOrEmpty(finaldate))
