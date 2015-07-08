@@ -130,6 +130,31 @@ namespace AlphaService
         }
 
         /// <summary>
+        ///  método para remover um recruta da base de dados
+        ///  TODO: lidar com possíveis dependências antes de apagar
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public XElement DeleteRecruit(string id)
+        {
+            XElement xElem = new XElement("isDeleted");
+
+            if (!string.IsNullOrEmpty(id))
+            {
+                int recruitId = Convert.ToInt32(id);
+
+                Recruits recruit = db.Recruits.Where(x => x.Id.Equals(recruitId)).FirstOrDefault();
+                db.Recruits.Remove(recruit);
+                db.SaveChanges();
+                xElem.Value = "true";
+                return xElem;
+            }
+
+            xElem.Value = "false";
+            return xElem;
+        }
+
+        /// <summary>
         ///  transforma a lista completa do staff num xml
         /// </summary>
         /// <returns></returns>
