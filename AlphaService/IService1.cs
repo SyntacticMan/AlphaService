@@ -64,6 +64,10 @@ namespace AlphaService
         [OperationContract]
         [WebGet(UriTemplate = "deletestaff/{id}")]
         XElement DeleteStaff(string id);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "insertrecruit/{name}/{email}/{platoonId}")]
+        XElement InsertRecruit(string name, string email, string platoonId);
     }
 
 }

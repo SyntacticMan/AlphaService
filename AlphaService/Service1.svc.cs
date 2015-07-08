@@ -72,6 +72,31 @@ namespace AlphaService
         }
 
         /// <summary>
+        /// método para inserir um recruta na base de dados
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="platoonId"></param>
+        /// <returns></returns>
+        public XElement InsertRecruit(string name, string email, string platoonId)
+        {
+            XElement xElem = new XElement("isInserted");
+
+            // validar parâmetros e dar entrada do registo
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(platoonId))
+            {
+                Recruits recruit = new Recruits { Name = name, Email = email, PlatoonId =  Convert.ToInt32(platoonId) };
+                db.Recruits.Add(recruit);
+                db.SaveChanges();
+                xElem.Value = "true";
+                return xElem;
+            }
+
+            xElem.Value = "false";
+            return xElem;
+        }
+
+        /// <summary>
         ///  transforma a lista completa do staff num xml
         /// </summary>
         /// <returns></returns>
