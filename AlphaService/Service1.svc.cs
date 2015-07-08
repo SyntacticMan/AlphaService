@@ -199,6 +199,32 @@ namespace AlphaService
             return xElem;
         }
 
+        /// <summary>
+        ///  método para remover um membro do staff
+        ///  TODO: validar relações e removê-las antes de apagar o registo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public XElement DeleteStaff(string id)
+        {
+            XElement xElem = new XElement("isDeleted");
+
+            // validar id e remover o membro do staff
+            if (!string.IsNullOrEmpty(id))
+            {
+                int staffId = Convert.ToInt32(id);
+
+                Staff staff = db.Staff.Where(x => x.Id.Equals(staffId)).FirstOrDefault();
+                db.Staff.Remove(staff);
+                db.SaveChanges();
+                xElem.Value = "true";
+                return xElem;
+            }
+
+            xElem.Value = "false";
+            return xElem;
+        }
+
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()
         {
