@@ -48,6 +48,15 @@ namespace AlphaService
         [OperationContract]
         [WebGet(UriTemplate = "getstaffbyid/{staffId}")]
         XElement GetStaffById(string staffId);
+
+        [OperationContract]
+        [WebGet(UriTemplate = "insertstaff/{name}/{email}/{platoonid}")]
+        XElement InsertStaff(string name, string email, string platoonId);
+
+       /* [OperationContract]
+        [WebGet(UriTemplate = "insertstaff/{name}/{email}")]
+        XElement InsertStaff(string name, string email);*/
+        
     }
 
 }

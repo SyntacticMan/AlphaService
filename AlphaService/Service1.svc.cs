@@ -126,6 +126,41 @@ namespace AlphaService
             return xElem;
         }
 
+        /// <summary>
+        ///  insere um membro do staff na base de dados, requer platoonid apesar de esse elemento não ser necessário
+        ///  para ser corrigido eventualmente
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="platoonId"></param>
+        /// <returns></returns>
+        public XElement InsertStaff(string name, string email, string platoonId)
+        {
+            XElement xElem = new XElement("isSaved");
+
+            // validar parâmetros de entrada antes de os enfiar na base de dados
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(platoonId))
+            {
+                Staff staff = new Staff { Name = name, Email = email, PlatoonId = Convert.ToInt32(platoonId) };
+                db.Staff.Add(staff);
+                db.SaveChanges();
+                xElem.Value = "true";
+                
+            }
+            else if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email))
+            {
+                Staff staff = new Staff { Name = name, Email = email, PlatoonId = null};
+                db.Staff.Add(staff);
+                db.SaveChanges();
+                xElem.Value = "true";
+            }
+            else
+            {
+                xElem.Value = "false";
+            }
+            return xElem;
+        }
+
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()
         {
