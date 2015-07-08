@@ -161,6 +161,44 @@ namespace AlphaService
             return xElem;
         }
 
+        /// <summary>
+        ///  método para actualizar informação de um membro do staff
+        ///  como não sei se dá para enviar um null ou omitir um parâmetro o platoonId continua a ser requirido
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        /// <param name="platoonId"></param>
+        /// <returns></returns>
+        public XElement UpdateStaff(string id, string name, string email, string platoonId)
+        {
+            XElement xElem = new XElement("isUpdated");
+
+            // validar parâmetros, recuperar o registo e editá-lo
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(platoonId))
+            {
+                // converter o id do registo para um int
+                int staffId = Convert.ToInt32(id);
+
+                // recuperar o registo
+                Staff staff = db.Staff.Where(x => x.Id.Equals(staffId)).FirstOrDefault();
+
+                // actualizar os registos
+                staff.Name = name;
+                staff.Email = email;
+                staff.PlatoonId = Convert.ToInt32(platoonId);
+
+                db.Entry(staff).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                xElem.Value = "true";
+
+                return xElem;
+            }
+
+            xElem.Value = "false";
+            return xElem;
+        }
+
         // método para obter todos os pelotões
         public XElement GetAllPlatoons()
         {

@@ -50,13 +50,16 @@ namespace AlphaService
         XElement GetStaffById(string staffId);
 
         [OperationContract]
-        [WebGet(UriTemplate = "insertstaff/{name}/{email}/{platoonid}")]
+        [WebGet(UriTemplate = "insertstaff/{name}/{email}/{platoonId}")]
         XElement InsertStaff(string name, string email, string platoonId);
 
        /* [OperationContract]
         [WebGet(UriTemplate = "insertstaff/{name}/{email}")]
         XElement InsertStaff(string name, string email);*/
-        
+
+        [OperationContract]
+        [WebGet(UriTemplate = "updatestaff/{id}/{name}/{email}/{platoonId}")]
+        XElement UpdateStaff(string id, string name, string email, string platoonId);
     }
 
 }
